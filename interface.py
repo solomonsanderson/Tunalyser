@@ -7,14 +7,17 @@ class MainWindow(QMainWindow):
         super().__init__(parent)
         self.setWindowTitle("Tunalyser")
         self.setWindowIcon(QtGui.QIcon('icon.png'))
-        # self.setFixedSize(500, 500)
+        self.setFixedSize(500, 150)
         self.generalLayout = QVBoxLayout()
         self._centralWidget = QWidget(self)
         self.setCentralWidget(self._centralWidget)
         self._centralWidget.setLayout(self.generalLayout)
         self._createMenu()
         self._createToolBar()
+        self._createProgress()
         self._createButtons()
+        self._createRadio()
+        
         # self._createStatusBar()
 
     def _createMenu(self):
@@ -36,6 +39,22 @@ class MainWindow(QMainWindow):
             # self.buttons[btnText].setFixedSize(80,80)
             buttonsLayout.addWidget(self.buttons[btnText], pos[0], pos[1])
         self.generalLayout.addLayout(buttonsLayout)
+
+    def _createRadio(self):
+        self.b1 = QRadioButton('Sequential')
+        self.b1.setChecked(True)
+        self.b2 = QRadioButton('Shuffle')
+        self.b3 = QRadioButton('Loop')
+        radioLayout = QGridLayout()
+        radioLayout.addWidget(self.b1, 1, 0)
+        radioLayout.addWidget(self.b2, 1, 2)
+        radioLayout.addWidget(self.b3, 1, 3)
+        self.generalLayout.addLayout(radioLayout)
+    
+    def _createProgress(self):
+        # pass
+        self.pbar = QProgressBar(self)
+        self.generalLayout.addWidget(self.pbar)
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

@@ -1,7 +1,9 @@
 # Tunalyser - Music Player & Analyser
+![Logo](https://raw.githubusercontent.com/solomonsanderson/Tunalyser/master/icon.png?token=APB64QLO453UM4UMVMNSUVTBY5EVA)
+
 ## Description
 ** Work in Progress ** 
-![Logo](https://raw.githubusercontent.com/solomonsanderson/Tunalyser/master/icon.png?token=APB64QLO453UM4UMVMNSUVTBY5EVA)
+
 Tunalyser is a music player which lets you visualise ou music whilst you listen to it!
 
 The key library is Librosa which can be used to extrapolate and visualise lots of data from a range of sound file formats.

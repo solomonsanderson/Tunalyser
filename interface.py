@@ -1,13 +1,15 @@
 from PyQt5.QtWidgets import *
 from PyQt5 import QtGui
 import sys 
+import os 
+
 
 class MainWindow(QMainWindow):
     def __init__(self, parent = None):
         super().__init__(parent)
         self.setWindowTitle("Tunalyser")
         self.setWindowIcon(QtGui.QIcon('icon.png'))
-        self.setFixedSize(500, 150)
+        self.setFixedSize(500, 300)
         self.generalLayout = QVBoxLayout()
         self._centralWidget = QWidget(self)
         self.setCentralWidget(self._centralWidget)
@@ -17,7 +19,7 @@ class MainWindow(QMainWindow):
         self._createProgress()
         self._createButtons()
         self._createRadio()
-        
+        self._createListBox()
         # self._createStatusBar()
 
     def _createMenu(self):
@@ -56,6 +58,13 @@ class MainWindow(QMainWindow):
         self.pbar = QProgressBar(self)
         self.generalLayout.addWidget(self.pbar)
 
+    def _createListBox(self):
+        self.lbox = QListWidget()
+        file_names = os.listdir(r"C:\Users\Solom\OneDrive - University of Birmingham\Desktop\Python\Projects\tunalyser\audio")
+        for name in file_names: 
+            self.lbox.addItem(name)
+        
+        self.generalLayout.addWidget(self.lbox)
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     window = MainWindow()

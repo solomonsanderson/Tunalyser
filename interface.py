@@ -8,9 +8,14 @@ import time
 import numpy as np
 import datetime 
 
+
+# from player import play
+
+
 class MainWindow(QMainWindow):
     def __init__(self, parent = None):
         super().__init__(parent)
+
         self.setWindowTitle("Tunalyser")
         self.setWindowIcon(QtGui.QIcon('icon.png'))
         self.setFixedSize(500, 300)
@@ -21,7 +26,8 @@ class MainWindow(QMainWindow):
         self._createMenu()
         self._createToolBar()
         self._createProgress()
-        self._createButtons()
+        self._addButtons()
+        # self._createButtons()
         self._createRadio()
         self._createListBox()
         # self._createStatusBar()
@@ -35,16 +41,19 @@ class MainWindow(QMainWindow):
         self.addToolBar(tools)
         tools.addAction('Exit', self.close)
     
-    def _createButtons(self):
-        self.buttons = {}
+    def _addButtons(self):
         buttonsLayout = QGridLayout()
-        buttons = {"Play/Pause":(0,1), "Next Track":(0,2), "Previous Track":(0,0) }
-
-        for btnText, pos in buttons.items():
-            self.buttons[btnText] = QPushButton(btnText)
-            # self.buttons[btnText].setFixedSize(80,80)
-            buttonsLayout.addWidget(self.buttons[btnText], pos[0], pos[1])
+        self.playbtn = QPushButton('Play/Pause')
+        buttonsLayout.addWidget(self.playbtn, 0, 1)
         self.generalLayout.addLayout(buttonsLayout)
+        self.playbtn.clicked.connect(self.timer)
+        # self.playbtn.clicked.connect(play())
+        self.prevbtn = QPushButton('Previous')
+        buttonsLayout.addWidget(self.prevbtn, 0, 0)
+        
+        self.nextbtn = QPushButton('Next')
+        buttonsLayout.addWidget(self.nextbtn, 0 , 2)
+
 
     def _createRadio(self):
         self.b1 = QRadioButton('Sequential')
@@ -75,7 +84,7 @@ class MainWindow(QMainWindow):
         elif self.b3.isChecked == True:
             QMediaPlaylist.PlaybackMode.Loop
         
-        print(state)
+        # print(state)
         return state
 
     def _createProgress(self):
@@ -83,12 +92,12 @@ class MainWindow(QMainWindow):
         self.pbar = QProgressBar(self)
         self.pbar.setGeometry(30,40,200,25)
         self.generalLayout.addWidget(self.pbar)
-        self.btn = QPushButton('Start', self)
-        self.btn.clicked.connect(self.timer)
+        self.timer
+        
         
     def timer(self):
         duration = 180  # placeholder value 
-        step = 90
+        step = 1
         indicies = np.arange(0, duration + 1, step)
         
         # self.pbar.setMinimum(indicies[0])
@@ -100,6 +109,7 @@ class MainWindow(QMainWindow):
             self.pbar.text()
             self.pbar.setFormat(f'{str(datetime.timedelta(seconds=step))[2:]}')
         self.pbar.reset()
+        self.generalLayout.addWidget(self.pbar)
 
     def _createListBox(self):
         self.lbox = QListWidget()
@@ -110,9 +120,9 @@ class MainWindow(QMainWindow):
             self.lbox.addItem(name)
         #     playlist.addMedia(QMediaContent(QUrl.fromLocalFile(name)))
             
-        
-        
         self.generalLayout.addWidget(self.lbox)
+
+
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     window = MainWindow()

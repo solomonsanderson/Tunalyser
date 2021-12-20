@@ -11,7 +11,7 @@ import datetime
 from PyQt5.QtCore import Qt
 
 
-from player import playpause, load
+from player import playpause, load, duration
 #
 
 class MainWindow(QMainWindow):
@@ -27,6 +27,7 @@ class MainWindow(QMainWindow):
         self._centralWidget.setLayout(self.generalLayout)
         self._createMenu()
         self._createToolBar()
+        self._createSongTitle()
         # self._createProgress()
         self._createSlider()
         self._addButtons()
@@ -44,6 +45,11 @@ class MainWindow(QMainWindow):
         self.addToolBar(tools)
         tools.addAction('Exit', self.close)
     
+    def _createSongTitle(self):
+        self.songTitle = QLabel()
+        self.songTitle.setText("Please Load a Song")
+        self.generalLayout.addWidget(self.songTitle)
+
     def _addButtons(self):
         buttonsLayout = QGridLayout()
         self.playbtn = QPushButton('Play/Pause')
@@ -58,16 +64,19 @@ class MainWindow(QMainWindow):
         self.nextbtn = QPushButton('Next')
         buttonsLayout.addWidget(self.nextbtn, 0 , 2)
 
-    def playloc(self):
-        filename = "audio/song.mp3"
-        fullpath = QtCore.QDir.current().absoluteFilePath(filename)
-        url = QtCore.QUrl.fromLocalFile(fullpath)
-        content = QtMultimedia.QMediaContent(url)
-        # playlist = QtMultimedia.QMediaPlaylist
-        player=QtMultimedia.QMediaPlayer()
-        player.setMedia(content)
-        print('playing...')
-        player.play()
+    # def playloc(self):
+    #     filename = "audio/song.mp3"
+    #     fullpath = QtCore.QDir.current().absoluteFilePath(filename)
+    #     url = QtCore.QUrl.fromLocalFile(fullpath)
+    #     content = QtMultimedia.QMediaContent(url)
+    #     # playlist = QtMultimedia.QMediaPlaylist
+    #     player=QtMultimedia.QMediaPlayer()
+    #     player.setMedia(content)
+    #     print('playing...')
+    #     player.play()
+    #     duration = QtMultimedia.QMediaPlayer.duration()
+    #     print(duration)
+
 
     def _createRadio(self):
         self.b1 = QRadioButton('Sequential')
@@ -101,12 +110,12 @@ class MainWindow(QMainWindow):
         # print(state)
         return state
 
-    def _createProgress(self):
-        # pass
-        self.pbar = QProgressBar(self)
-        self.pbar.setGeometry(30,40,200,25)
-        self.generalLayout.addWidget(self.pbar)
-        self.timer
+    # def _createProgress(self):
+    #     # pass
+    #     self.pbar = QProgressBar(self)
+    #     self.pbar.setGeometry(30,40,200,25)
+    #     self.generalLayout.addWidget(self.pbar)
+    #     self.timer
         
         
     def timer(self):
@@ -126,10 +135,16 @@ class MainWindow(QMainWindow):
         self.generalLayout.addWidget(self.pbar)
 
     def _createSlider(self):
-        layout = QHBoxLayout()
+        layout = QGridLayout()
         self.slider = QSlider(Qt.Horizontal)
         # self.slider.setRange(0, 0)
-        layout.addWidget(self.slider)
+        layout.addWidget(self.slider, 0, 1)
+        self.currentLabel = QLabel()
+        self.currentLabel.setText('t')
+        self.durationLabel = QLabel()
+        # self.durationLabel.setText(duration())
+        layout.addWidget(self.currentLabel, 0, 0)
+        layout.addWidget(self.durationLabel, 0, 2)
         self.generalLayout.addLayout(layout)
         
 
@@ -147,6 +162,7 @@ class MainWindow(QMainWindow):
     def lboxClicked(self, qmodelindex):
         # make so when clicked, song is played
         item = self.lbox.currentItem().text()
+        self.songTitle.setText(item)
         load(item)
        
 

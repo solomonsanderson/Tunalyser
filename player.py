@@ -1,6 +1,7 @@
 import sys
 from PyQt5 import QtMultimedia, QtCore, QtWidgets
 import time
+import os
 
 app = QtWidgets.QApplication(sys.argv)
 filename = "audio/song.mp3"
@@ -12,6 +13,13 @@ player=QtMultimedia.QMediaPlayer()
 player.setMedia(content)
 
 
+def load(path):
+    print(path)
+    filename = 'audio/' + path
+    fullpath = QtCore.QDir.current().absoluteFilePath(filename)
+    url = QtCore.QUrl.fromLocalFile(fullpath)
+    content = QtMultimedia.QMediaContent(url)
+    player.setMedia(content)
 
 def playpause():
     play_state = player.state()
@@ -20,5 +28,3 @@ def playpause():
         player.pause()
     else:
         player.play()
-    print(play_state)
-# sys.exit(app.exec_())

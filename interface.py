@@ -8,9 +8,10 @@ import os
 import time
 import numpy as np
 import datetime 
+from PyQt5.QtCore import Qt
 
 
-from player import playpause
+from player import playpause, load
 #
 
 class MainWindow(QMainWindow):
@@ -26,7 +27,8 @@ class MainWindow(QMainWindow):
         self._centralWidget.setLayout(self.generalLayout)
         self._createMenu()
         self._createToolBar()
-        self._createProgress()
+        # self._createProgress()
+        self._createSlider()
         self._addButtons()
         # self._createButtons()
         self._createRadio()
@@ -48,8 +50,6 @@ class MainWindow(QMainWindow):
         buttonsLayout.addWidget(self.playbtn, 0, 1)
         self.generalLayout.addLayout(buttonsLayout)
         # self.playbtn.clicked.connect(self.timer)
-
-
         self.playbtn.clicked.connect(playpause)
         # self.playbtn.clicked.connect(play())
         self.prevbtn = QPushButton('Previous')
@@ -125,6 +125,14 @@ class MainWindow(QMainWindow):
         self.pbar.reset()
         self.generalLayout.addWidget(self.pbar)
 
+    def _createSlider(self):
+        layout = QHBoxLayout()
+        self.slider = QSlider(Qt.Horizontal)
+        # self.slider.setRange(0, 0)
+        layout.addWidget(self.slider)
+        self.generalLayout.addLayout(layout)
+        
+
     def _createListBox(self):
         self.lbox = QListWidget()
         file_names = os.listdir(r"C:\Users\Solom\OneDrive - University of Birmingham\Desktop\Python\Projects\tunalyser\audio")
@@ -133,8 +141,14 @@ class MainWindow(QMainWindow):
         for name in file_names: 
             self.lbox.addItem(name)
         #     playlist.addMedia(QMediaContent(QUrl.fromLocalFile(name)))
-            
+        self.lbox.clicked.connect(self.lboxClicked)
         self.generalLayout.addWidget(self.lbox)
+
+    def lboxClicked(self, qmodelindex):
+        # make so when clicked, song is played
+        item = self.lbox.currentItem().text()
+        load(item)
+       
 
 
 if __name__ == '__main__':

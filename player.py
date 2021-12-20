@@ -11,8 +11,14 @@ content = QtMultimedia.QMediaContent(url)
 player=QtMultimedia.QMediaPlayer()
 player.setMedia(content)
 
-sys.exit(app.exec_())
 
 
-def play():
-    player.play()
+def playpause():
+    play_state = player.state()
+    playing = QtMultimedia.QMediaPlayer.PlayingState
+    if play_state == playing:
+        player.pause()
+    else:
+        player.play()
+    print(play_state)
+# sys.exit(app.exec_())

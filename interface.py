@@ -1,5 +1,6 @@
 from PyQt5.QtCore import QUrl
 from PyQt5.QtMultimedia import QMediaContent, QMediaPlaylist
+from PyQt5 import QtCore, QtMultimedia
 from PyQt5.QtWidgets import *
 from PyQt5 import QtGui
 import sys 
@@ -9,8 +10,8 @@ import numpy as np
 import datetime 
 
 
-# from player import play
-
+from player import playpause
+#
 
 class MainWindow(QMainWindow):
     def __init__(self, parent = None):
@@ -46,7 +47,10 @@ class MainWindow(QMainWindow):
         self.playbtn = QPushButton('Play/Pause')
         buttonsLayout.addWidget(self.playbtn, 0, 1)
         self.generalLayout.addLayout(buttonsLayout)
-        self.playbtn.clicked.connect(self.timer)
+        # self.playbtn.clicked.connect(self.timer)
+
+
+        self.playbtn.clicked.connect(playpause)
         # self.playbtn.clicked.connect(play())
         self.prevbtn = QPushButton('Previous')
         buttonsLayout.addWidget(self.prevbtn, 0, 0)
@@ -54,6 +58,16 @@ class MainWindow(QMainWindow):
         self.nextbtn = QPushButton('Next')
         buttonsLayout.addWidget(self.nextbtn, 0 , 2)
 
+    def playloc(self):
+        filename = "audio/song.mp3"
+        fullpath = QtCore.QDir.current().absoluteFilePath(filename)
+        url = QtCore.QUrl.fromLocalFile(fullpath)
+        content = QtMultimedia.QMediaContent(url)
+        # playlist = QtMultimedia.QMediaPlaylist
+        player=QtMultimedia.QMediaPlayer()
+        player.setMedia(content)
+        print('playing...')
+        player.play()
 
     def _createRadio(self):
         self.b1 = QRadioButton('Sequential')

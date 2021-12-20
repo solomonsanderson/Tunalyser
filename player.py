@@ -9,7 +9,7 @@ import os
 # url = QtCore.QUrl.fromLocalFile(fullpath)
 # content = QtMultimedia.QMediaContent(url)
 # playlist = QtMultimedia.QMediaPlaylist
-player=QtMultimedia.QMediaPlayer()
+player = QtMultimedia.QMediaPlayer()
 # player.setMedia(content)
 # duration = QtMultimedia.QMediaPlayer.duration() 
 
@@ -18,6 +18,7 @@ def load(path):
     fullpath = QtCore.QDir.current().absoluteFilePath(filename)
     url = QtCore.QUrl.fromLocalFile(fullpath)
     content = QtMultimedia.QMediaContent(url)
+    
     player.setMedia(content)
 
 

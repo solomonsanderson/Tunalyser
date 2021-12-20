@@ -10,6 +10,9 @@ import numpy as np
 import datetime 
 from PyQt5.QtCore import Qt
 
+import stagger
+from PIL import Image
+import io
 
 from player import playpause, load, duration
 #
@@ -20,14 +23,14 @@ class MainWindow(QMainWindow):
 
         self.setWindowTitle("Tunalyser")
         self.setWindowIcon(QtGui.QIcon('icon.png'))
-        self.setFixedSize(500, 300)
+        self.setFixedSize(500, 500)
         self.generalLayout = QVBoxLayout()
         self._centralWidget = QWidget(self)
         self.setCentralWidget(self._centralWidget)
         self._centralWidget.setLayout(self.generalLayout)
         self._createMenu()
         self._createToolBar()
-        self._createSongTitle()
+        self._createSongInfo()
         # self._createProgress()
         self._createSlider()
         self._addButtons()
@@ -45,10 +48,19 @@ class MainWindow(QMainWindow):
         self.addToolBar(tools)
         tools.addAction('Exit', self.close)
     
-    def _createSongTitle(self):
+    def _createSongInfo(self):
         self.songTitle = QLabel()
         self.songTitle.setText("Please Load a Song")
-        self.generalLayout.addWidget(self.songTitle)
+       
+        self.coverLabel = QLabel(self)
+        self.pixmap = QtGui.QPixmap('cover.png')
+        self.coverLabel.setPixmap(self.pixmap)
+        
+        layout = QGridLayout()
+        layout.addWidget(self.coverLabel, 0, 0)
+        layout.addWidget(self.songTitle, 0, 1)
+        self.generalLayout.addLayout(layout)
+        # self.generalLayout.addWidget(self.songTitle)
 
     def _addButtons(self):
         buttonsLayout = QGridLayout()
@@ -63,19 +75,6 @@ class MainWindow(QMainWindow):
         
         self.nextbtn = QPushButton('Next')
         buttonsLayout.addWidget(self.nextbtn, 0 , 2)
-
-    # def playloc(self):
-    #     filename = "audio/song.mp3"
-    #     fullpath = QtCore.QDir.current().absoluteFilePath(filename)
-    #     url = QtCore.QUrl.fromLocalFile(fullpath)
-    #     content = QtMultimedia.QMediaContent(url)
-    #     # playlist = QtMultimedia.QMediaPlaylist
-    #     player=QtMultimedia.QMediaPlayer()
-    #     player.setMedia(content)
-    #     print('playing...')
-    #     player.play()
-    #     duration = QtMultimedia.QMediaPlayer.duration()
-    #     print(duration)
 
 
     def _createRadio(self):
@@ -139,6 +138,8 @@ class MainWindow(QMainWindow):
         self.slider = QSlider(Qt.Horizontal)
         # self.slider.setRange(0, 0)
         layout.addWidget(self.slider, 0, 1)
+
+        # Labelling slider
         self.currentLabel = QLabel()
         self.currentLabel.setText('t')
         self.durationLabel = QLabel()
@@ -146,7 +147,15 @@ class MainWindow(QMainWindow):
         layout.addWidget(self.currentLabel, 0, 0)
         layout.addWidget(self.durationLabel, 0, 2)
         self.generalLayout.addLayout(layout)
+
+    # def getCover(self, item):
+    #     path = 'audio/' + item
+    #     mp3 = stagger.read_tag(path)
+    #     by_data = mp3[stagger.id3.APIC][0].data
+    #     im = io.BytesIO(by_data)
+    #     self.cover.setPixmap(QtGui.QPixmap(im))
         
+
 
     def _createListBox(self):
         self.lbox = QListWidget()
@@ -164,6 +173,9 @@ class MainWindow(QMainWindow):
         item = self.lbox.currentItem().text()
         self.songTitle.setText(item)
         load(item)
+
+    
+        
        
 
 

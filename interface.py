@@ -10,7 +10,7 @@ import numpy as np
 import datetime 
 from PyQt5.QtCore import Qt
 
-import stagger
+# import stagger
 from PIL import Image
 import io
 
@@ -174,10 +174,6 @@ class MainWindow(QMainWindow):
         self.songTitle.setText(item)
         load(item)
 
-    
-        
-       
-
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
@@ -186,6 +182,5 @@ if __name__ == '__main__':
     sys.exit(app.exec())
 
 
-        
 
 

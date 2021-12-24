@@ -13,7 +13,7 @@ mixer.init()
 # audio_location = mixer.music.load("audio/song.mp3")
 # mixer.music.play()
 # 'C:\Users\Solom\OneDrive - University of Birmingham\Desktop\Python\Projects\tunalyser\audio\song.mp3'
-data, sr = librosa.load(r'audio/song.mp3')
+data, sr = librosa.load(r'audio/Skr.mp3')
 duration = librosa.get_duration(data, sr) # duration in seconds
 print(sr)
 print(len(data))

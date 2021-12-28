@@ -1,5 +1,5 @@
 # Tunalyser - Music Player & Analyser
-![Logo](https://raw.githubusercontent.com/solomonsanderson/Tunalyser/master/icon.png?token=APB64QLO453UM4UMVMNSUVTBY5EVA)
+![Logo](https://raw.githubusercontent.com/solomonsanderson/Tunalyser/master/icon.png?token=APB64QL6QCKFRFEZ5QOTDWDB2RF7C)
 
 ## Description
 ** Work in Progress ** 

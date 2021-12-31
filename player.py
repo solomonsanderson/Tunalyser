@@ -1,3 +1,8 @@
+'''
+Code to load and play music, backend for interface.py
+'''
+
+
 import sys
 from PyQt5 import QtMultimedia, QtCore, QtWidgets
 import time

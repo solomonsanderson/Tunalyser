@@ -1,3 +1,9 @@
+'''
+Code to create an interface for an mp3 player including basic media controls,
+ album cover display, song selection and other functions
+'''
+
+
 from PyQt5.QtCore import QUrl
 from PyQt5.QtMultimedia import QMediaContent, QMediaPlaylist
 from PyQt5 import QtCore, QtMultimedia

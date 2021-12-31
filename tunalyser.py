@@ -1,3 +1,8 @@
+'''
+Code to analyse audio files and visualise them.
+'''
+
+
 from pygame import mixer
 import tkinter as tk
 import librosa

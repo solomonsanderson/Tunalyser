@@ -1,4 +1,4 @@
-# Tunalyser - Music Player & Analyser
+# Tunalyser - Music Player & Analyser - WORK IN PROGRESS
 ![Logo](https://raw.githubusercontent.com/solomonsanderson/Tunalyser/master/icon.png?token=APB64QL6QCKFRFEZ5QOTDWDB2RF7C)
 
 ## Description

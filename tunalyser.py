@@ -31,9 +31,9 @@ fig, ax = plt.subplots(1,1, figsize=(12,9) )
 data_harm, data_perc = librosa.effects.hpss(data)
 tempo, beats =librosa.beat.beat_track(data, sr)
 beat_times = librosa.frames_to_time(beats, sr)
-# ax.vlines(beat_times, ymax=1.2, ymin = -1.2, color='black', linestyle='--', alpha=0.8, label='beats')
-# display.waveshow(data_harm, sr=sr, ax=ax, alpha=0.5, label='Harmonics')
-# display.waveshow(data_perc, sr=sr, ax=ax, color='r', alpha=0.5, label='Percussives')
+ax.vlines(beat_times, ymax=1.2, ymin = -1.2, color='black', linestyle='--', alpha=0.8, label='beats')
+display.waveshow(data_harm, sr=sr, ax=ax, alpha=0.5, label='Harmonics')
+display.waveshow(data_perc, sr=sr, ax=ax, color='r', alpha=0.5, label='Percussives')
 # ax.plot(data,times)
 
 ax.set_xlabel('Timestamp (seconds)')
@@ -41,34 +41,33 @@ ax.set_ylabel('Amplitude')
 ax.set_title('Waveform from a section of "Layer Cake" by Kano.')
 ax.legend()
 
-display.waveshow(data_harm[0:int(20/(1/sr))], sr=sr, ax=ax, alpha=0.5, label='Harmonics')
-display.waveshow(data_perc[0:int(20/(1/sr))], sr=sr, ax=ax, color='r', alpha=0.5, label='Percussives')
+# display.waveshow(data_harm[0:int(20/(1/sr))], sr=sr, ax=ax, alpha=0.5, label='Harmonics')
+# display.waveshow(data_perc[0:int(20/(1/sr))], sr=sr, ax=ax, color='r', alpha=0.5, label='Percussives')
+
+
+def update(time, width):
+    print(time)
+    print(time, time+width)
+    ax.set(xlim=(time, time+width))
+    fig.canvas.draw_idle()
+
+# interval = 20
+# frames = duration / ( interval / 1000)
+# x = np.linspace(0,duration, int(frames))
+duration_rounded = int(duration)
+print(duration)
+print(duration_rounded)
 
 plt.ion()
-for i in range(0,len(data)):
-    plt.clf()
-    display.waveshow(data_harm[0+i:int(20+i)], sr=sr, ax=ax, alpha=0.5, label='Harmonics')
-    display.waveshow(data_perc[0+i:int(20+i)], sr=sr, ax=ax, color='r', alpha=0.5, label='Percussives')
-    time.delay(20)
+for i in range(duration_rounded):  # Maybe change to use while loop
+    width = 10
+    interval = 1  # Interval in seconds
+    plt.pause(interval)
+    t = i + interval
+    update(t, width)
+    print(t)
 
-interval = 20
-frames = duration / ( interval / 1000)
-x = np.linspace(0,duration, int(frames))
+plt.show()   
 
-plt.show()
+# print(len(x)
 
-# for i in x:
-#     ax.set_xlim(0 + i, 20 + i)
-#     time.sleep(interval/1000)
-#     plt.draw()
-#     print(i)
-
-
-
-# def init():
-#     ax.set_xlim(0,20)
-
-# def animate(i):
-#     ax.set_xlim(0 + i, 20 + i)
-# anim = FuncAnimation(fig, animate, init_func=init, frames=frames, interval=interval, blit=True )
-# plt.show()
